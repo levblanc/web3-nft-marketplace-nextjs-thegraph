@@ -1,6 +1,7 @@
 import styles from '../styles/Home.module.css';
 import { useQuery } from '@apollo/client';
 import { useMoralis } from 'react-moralis';
+import { Skeleton } from 'antd';
 import { GET_ACTIVE_ITEMS } from '../constants/subgraphQueries';
 import contractAddresses from '../constants/contractAddresses.json';
 import NFTCard from '../components/NFTCard';
@@ -18,7 +19,7 @@ export default function Home() {
       <div className="flex flex-wrap">
         {isWeb3Enabled ? (
           loading || !data ? (
-            <div>Loading......</div>
+            <Skeleton active={true} />
           ) : (
             data.activeItems.map(({ price, nftAddress, tokenId, seller }) => {
               return (
