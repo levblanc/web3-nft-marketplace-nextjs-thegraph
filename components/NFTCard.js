@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { ethers } from 'ethers';
 import marketplaceAbi from '../constants/marketplaceAbi.json';
 import dynamicNFTAbi from '../constants/dynamicNFTAbi.json';
+import { truncateAddress } from '../utils/formatter';
 
 const NFTBox = ({
   price,
@@ -13,7 +14,7 @@ const NFTBox = ({
   // marketplaceAddress,
   seller,
 }) => {
-  const { isWeb3Enabled } = useMoralis();
+  const { isWeb3Enabled, account } = useMoralis();
   const [imageTitle, setImageTitle] = useState('');
   const [imageURI, setImageURI] = useState('');
   const [imageDesc, setImageDesc] = useState('');
@@ -56,6 +57,9 @@ const NFTBox = ({
     }
   }, [isWeb3Enabled]);
 
+  const ownedByUser = seller === account || seller === undefined;
+  const formattedSellerAddress = ownedByUser ? 'you' : truncateAddress(seller);
+
   return (
     <div>
       {imageURI ? (
@@ -71,7 +75,9 @@ const NFTBox = ({
           </div>
           <div className="font-bold text-slate-600 rounded-b-lg p-2">
             <div className="text-lg mt-2">PixCats #{tokenId}</div>
-            {/* <div className="italic text-sm">Owned by {seller}</div> */}
+            <div className="italic text-sm">
+              Owned by {formattedSellerAddress}
+            </div>
             <div className="text-sm mt-4">Price</div>
             <div>{ethers.utils.formatUnits(price, 'ether')} ETH</div>
           </div>
