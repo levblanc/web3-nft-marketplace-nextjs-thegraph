@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useWeb3Contract, useMoralis } from 'react-moralis';
 import { CryptoIcon } from 'next-crypto-icons';
 import { Card, Skeleton } from 'antd';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import Image from 'next/image';
 import { ethers } from 'ethers';
 import marketplaceAbi from '../constants/marketplaceAbi.json';
@@ -20,6 +21,13 @@ const NFTBox = ({
   const [imageLoading, setImageLoading] = useState(true);
   const [imageURI, setImageURI] = useState('');
   const [imageDesc, setImageDesc] = useState('');
+  const [cardActions, setCardActions] = useState([]);
+  const [showUpdateListingModal, setShowUpdateListingModal] = useState(false);
+  const [showBuyItemModal, setShowBuyItemModal] = useState(false);
+
+  const ownedByUser = seller === account || seller === undefined;
+  const formattedSellerAddress = ownedByUser ? 'you' : truncateAddress(seller);
+  const priceInEther = ethers.utils.formatUnits(price, 'ether');
 
   const { runContractFunction: getTokenURI } = useWeb3Contract({
     abi: dynamicNFTAbi,
@@ -52,6 +60,45 @@ const NFTBox = ({
     setImageLoading(false);
     setImageURI(imageURI);
     setImageDesc(imageDesc);
+
+    if (ownedByUser) {
+      setCardActions([
+        <div
+          className="flex flex-row items-center justify-center"
+          key="cancelListing"
+          onClick={() => showModal('cancel')}
+        >
+          <DeleteOutlined className="mr-2" />
+          Cancel
+        </div>,
+        <div
+          className="flex flex-row items-center justify-center"
+          key="updateListing"
+          onClick={() => showModal('update')}
+        >
+          <EditOutlined className="mr-2" />
+          Update
+        </div>,
+      ]);
+    } else {
+      setCardActions([
+        <div
+          className="flex flex-row items-center justify-center"
+          key="updateListing"
+          onClick={() => showModal('buy')}
+        >
+          Buy NFT
+        </div>,
+      ]);
+    }
+  };
+
+  const showModal = (type) => {
+    if (type === 'update') {
+      setShowUpdateListingModal(true);
+    } else if (type === 'buy') {
+      setShowBuyItemModal(true);
+    }
   };
 
   useEffect(() => {
@@ -60,11 +107,14 @@ const NFTBox = ({
     }
   }, [isWeb3Enabled]);
 
-  const ownedByUser = seller === account || seller === undefined;
-  const formattedSellerAddress = ownedByUser ? 'you' : truncateAddress(seller);
-
   return (
-    <Card className="w-64 mr-5" hoverable>
+    <Card className="w-64 mr-5" hoverable actions={cardActions}>
+      <UpdateListingModal
+        open={showUpdateListingModal}
+        nftAdress={nftAddress}
+        tokenId={tokenId}
+        price={priceInEther}
+      />
       {/* {!imageURI ? ( */}
       {imageLoading ? (
         <>
@@ -90,9 +140,7 @@ const NFTBox = ({
             </div>
             <div className="flex flex-row items-center mt-4 text-lg">
               <CryptoIcon name="eth" width={18} style={'color'} />
-              <div className="ml-2">
-                {ethers.utils.formatUnits(price, 'ether')} ETH
-              </div>
+              <div className="ml-2">{priceInEther} ETH</div>
             </div>
           </div>
         </>
