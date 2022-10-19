@@ -64,7 +64,7 @@ const NFTBox = ({
     if (ownedByUser) {
       setCardActions([
         <div
-          className="flex flex-row items-center justify-center"
+          className="flex flex-row items-center justify-center hover:font-bold"
           key="cancelListing"
           onClick={() => showModal('cancel')}
         >
@@ -72,7 +72,7 @@ const NFTBox = ({
           Cancel
         </div>,
         <div
-          className="flex flex-row items-center justify-center"
+          className="flex flex-row items-center justify-center hover:font-bold"
           key="updateListing"
           onClick={() => showModal('update')}
         >
@@ -83,7 +83,7 @@ const NFTBox = ({
     } else {
       setCardActions([
         <div
-          className="flex flex-row items-center justify-center"
+          className="flex flex-row items-center justify-center hover:font-bold"
           key="updateListing"
           onClick={() => showModal('buy')}
         >
@@ -94,10 +94,22 @@ const NFTBox = ({
   };
 
   const showModal = (type) => {
-    if (type === 'update') {
-      setShowUpdateListingModal(true);
-    } else if (type === 'buy') {
-      setShowBuyItemModal(true);
+    switch (type) {
+      case 'update':
+        setShowUpdateListingModal(true);
+        break;
+
+      case 'cancel':
+        setShowCancelListingModal(true);
+        break;
+
+      case 'buy':
+        setShowBuyListingModal(true);
+        break;
+
+      default:
+        console.error(`"type" is ${type} in showModal function.`);
+        break;
     }
   };
 
@@ -110,7 +122,9 @@ const NFTBox = ({
   return (
     <Card className="w-64 mr-5" hoverable actions={cardActions}>
       <UpdateListingModal
-        open={showUpdateListingModal}
+        key={'update-listing-modal'}
+        isVisible={showUpdateListingModal}
+        hideModal={() => setShowUpdateListingModal(false)}
         nftAdress={nftAddress}
         tokenId={tokenId}
         price={priceInEther}

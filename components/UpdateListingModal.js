@@ -1,15 +1,28 @@
 import { Modal, InputNumber } from 'antd';
 
-const UpdateListingModal = ({ open, nftAdress, tokenId, price }) => {
+const UpdateListingModal = ({
+  isVisible,
+  hideModal,
+  nftAdress,
+  tokenId,
+  price,
+}) => {
   return (
     <Modal
-      className="text-lg"
-      open={open}
+      open={isVisible}
       centered
       title="Update listing price"
       okText="Update"
+      onCancel={hideModal}
+      onClose={hideModal}
+      onOk={''}
+      confirmLoading={''}
     >
-      <InputNumber addonAfter="ETH" defaultValue={price} />
+      <InputNumber
+        className="py-2 text-base"
+        addonAfter="ETH"
+        defaultValue={price}
+      />
     </Modal>
   );
 };
