@@ -1,11 +1,13 @@
 import { Modal } from 'antd';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { ExclamationCircleTwoTone, setTwoToneColor } from '@ant-design/icons';
 
 const CancelListingModal = ({ isVisible, hideModal, nftAddress, tokenId }) => {
+  setTwoToneColor('#faad14');
+
   const modalTitle = (
     <div className="flex flex-row items-center">
-      <ExclamationCircleOutlined className="mr-2" />
-      Confrim cancel listing
+      <ExclamationCircleTwoTone className="mr-2" style={{ fontSize: '20px' }} />
+      Confrim Remove Item
     </div>
   );
 
@@ -14,15 +16,16 @@ const CancelListingModal = ({ isVisible, hideModal, nftAddress, tokenId }) => {
       open={isVisible}
       centered
       title={modalTitle}
+      closable={false}
+      okType="danger"
       okText="Confirm"
       cancelText="Cancel"
-      onCancel={hideModal}
-      onClose={hideModal}
       onOk={''}
       confirmLoading={''}
+      onCancel={hideModal}
     >
       <p className="py-5 text-base">
-        Please confirm to cancel item PixCat #{tokenId}
+        Please confirm to remove item PixCat #{tokenId} from listing
       </p>
     </Modal>
   );

@@ -71,7 +71,7 @@ const NFTBox = ({
           onClick={() => showModal('cancel')}
         >
           <DeleteOutlined className="mr-2" />
-          Cancel
+          Remove
         </div>,
         <div
           className="flex flex-row items-center justify-center hover:font-bold"
