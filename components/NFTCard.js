@@ -9,6 +9,7 @@ import marketplaceAbi from '../constants/marketplaceAbi.json';
 import dynamicNFTAbi from '../constants/dynamicNFTAbi.json';
 import { truncateAddress } from '../utils/formatter';
 import UpdateListingModal from './UpdateListingModal';
+import CancelListingModal from './CancelListingModal';
 
 const NFTBox = ({
   price,
@@ -23,6 +24,7 @@ const NFTBox = ({
   const [imageDesc, setImageDesc] = useState('');
   const [cardActions, setCardActions] = useState([]);
   const [showUpdateListingModal, setShowUpdateListingModal] = useState(false);
+  const [showCancelListingModal, setShowCancelListingModal] = useState(false);
   const [showBuyItemModal, setShowBuyItemModal] = useState(false);
 
   const ownedByUser = seller === account || seller === undefined;
@@ -129,6 +131,15 @@ const NFTBox = ({
         tokenId={tokenId}
         price={priceInEther}
       />
+
+      <CancelListingModal
+        key={'cancel-listing-modal'}
+        isVisible={showCancelListingModal}
+        hideModal={() => setShowCancelListingModal(false)}
+        nftAdress={nftAddress}
+        tokenId={tokenId}
+      />
+
       {/* {!imageURI ? ( */}
       {imageLoading ? (
         <>
