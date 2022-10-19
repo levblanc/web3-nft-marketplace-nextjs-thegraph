@@ -1,4 +1,3 @@
-import styles from '../styles/Home.module.css';
 import { useQuery } from '@apollo/client';
 import { useMoralis } from 'react-moralis';
 import { Skeleton } from 'antd';
