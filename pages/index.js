@@ -24,6 +24,7 @@ export default function Home() {
               return (
                 <NFTCard
                   key={`${nftAddress}${tokenId}`}
+                  chain={chain}
                   price={price}
                   nftAddress={nftAddress}
                   tokenId={tokenId}

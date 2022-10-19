@@ -10,8 +10,10 @@ import dynamicNFTAbi from '../constants/dynamicNFTAbi.json';
 import { truncateAddress } from '../utils/formatter';
 import UpdateListingModal from './UpdateListingModal';
 import CancelListingModal from './CancelListingModal';
+import BuyItemModal from './BuyItemModal';
 
 const NFTBox = ({
+  chain,
   price,
   nftAddress,
   tokenId,
@@ -106,7 +108,7 @@ const NFTBox = ({
         break;
 
       case 'buy':
-        setShowBuyListingModal(true);
+        setShowBuyItemModal(true);
         break;
 
       default:
@@ -138,6 +140,17 @@ const NFTBox = ({
         hideModal={() => setShowCancelListingModal(false)}
         nftAdress={nftAddress}
         tokenId={tokenId}
+      />
+
+      <BuyItemModal
+        key={'buy-item-modal'}
+        isVisible={showBuyItemModal}
+        hideModal={() => setShowBuyItemModal(false)}
+        chain={chain}
+        userAccount={account}
+        nftAdress={nftAddress}
+        tokenId={tokenId}
+        price={priceInEther}
       />
 
       {/* {!imageURI ? ( */}
