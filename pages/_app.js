@@ -1,10 +1,29 @@
 import '../styles/globals.css';
-import Head from 'next/head';
-import { MoralisProvider } from 'react-moralis';
+import '@rainbow-me/rainbowkit/styles.css';
+import { RainbowKitProvider, getDefaultWallets } from '@rainbow-me/rainbowkit';
+import { chain, configureChains, createClient, WagmiConfig } from 'wagmi';
+import { publicProvider } from 'wagmi/providers/public';
+import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
+import Head from 'next/head';
 import Header from '../components/Header';
 
-const client = new ApolloClient({
+const { chains, provider } = configureChains(
+  [chain.goerli],
+  [alchemyProvider({ apiKey: process.env.ALCHEMY_API_KEY }), publicProvider()]
+);
+
+const { connectors } = getDefaultWallets({
+  appName: 'NFT Marketplace',
+  chains,
+});
+
+const wagmiClient = createClient({
+  connectors,
+  provider,
+});
+
+const apolloClient = new ApolloClient({
   cache: new InMemoryCache(),
   uri: process.env.NEXT_PUBLIC_THE_GRAPH_QUERY_URI,
 });
@@ -17,12 +36,14 @@ function MyApp({ Component, pageProps }) {
         <meta name="description" content="NFT Marketplace" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <MoralisProvider initializeOnMount={false}>
-        <ApolloProvider client={client}>
-          <Header />
-          <Component {...pageProps} />
-        </ApolloProvider>
-      </MoralisProvider>
+      <WagmiConfig client={wagmiClient}>
+        <RainbowKitProvider chains={chains}>
+          <ApolloProvider client={apolloClient}>
+            <Header />
+            {/* <Component {...pageProps} /> */}
+          </ApolloProvider>
+        </RainbowKitProvider>
+      </WagmiConfig>
     </div>
   );
 }

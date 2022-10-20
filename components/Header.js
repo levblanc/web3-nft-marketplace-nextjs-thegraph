@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { ConnectButton } from '@web3uikit/web3';
+// import { ConnectButton } from '@web3uikit/web3';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 const Header = () => {
   return (
@@ -12,7 +13,8 @@ const Header = () => {
         <Link href="/sell-nft">
           <a className="mr-4 p-5">Sell NFT</a>
         </Link>
-        <ConnectButton moralisAuth={false} />
+        {/* <ConnectButton moralisAuth={false} /> */}
+        <ConnectButton />
       </div>
     </nav>
   );
