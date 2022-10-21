@@ -146,65 +146,67 @@ const NFTBox = ({
   }, [isDisconnected, userAccount]);
 
   return (
-    <Card className="w-64 mr-5" hoverable actions={cardActions}>
-      {!imageURI ? (
-        <>
-          <Skeleton.Image active={true} />
-          <Skeleton className="mt-8" active={true} />
-        </>
-      ) : (
-        <>
-          <UpdateListingModal
-            key={'update-listing-modal'}
-            isVisible={showUpdateListingModal}
-            hideModal={() => setShowUpdateListingModal(false)}
-            nftAdress={nftAddress}
-            tokenId={tokenId}
-            price={priceInEther}
-          />
-
-          <CancelListingModal
-            key={'cancel-listing-modal'}
-            isVisible={showCancelListingModal}
-            hideModal={() => setShowCancelListingModal(false)}
-            nftAdress={nftAddress}
-            tokenId={tokenId}
-          />
-
-          <BuyItemModal
-            key={'buy-item-modal'}
-            isVisible={showBuyItemModal}
-            hideModal={() => setShowBuyItemModal(false)}
-            chain={chain}
-            userAccount={userAccount}
-            nftAdress={nftAddress}
-            tokenId={tokenId}
-            price={priceInEther}
-          />
-
-          <div className="p-4 bg-yellow-50">
-            <Image
-              loader={() => imageURI}
-              unoptimized={true}
-              src={imageURI}
-              width={200}
-              height={200}
-              alt={imageDesc}
+    <div className="w-64 mr-5">
+      <Card hoverable actions={cardActions}>
+        {!imageURI ? (
+          <>
+            <Skeleton.Image active={true} />
+            <Skeleton className="mt-8" active={true} />
+          </>
+        ) : (
+          <>
+            <UpdateListingModal
+              key={'update-listing-modal'}
+              isVisible={showUpdateListingModal}
+              hideModal={() => setShowUpdateListingModal(false)}
+              nftAdress={nftAddress}
+              tokenId={tokenId}
+              price={priceInEther}
             />
-          </div>
-          <div className="font-bold text-slate-600 rounded-b-lg px-2">
-            <div className="text-lg mt-4">PixCats #{tokenId}</div>
-            <div className="italic text-sm">
-              Owned by {formattedSellerAddress}
+
+            <CancelListingModal
+              key={'cancel-listing-modal'}
+              isVisible={showCancelListingModal}
+              hideModal={() => setShowCancelListingModal(false)}
+              nftAdress={nftAddress}
+              tokenId={tokenId}
+            />
+
+            <BuyItemModal
+              key={'buy-item-modal'}
+              isVisible={showBuyItemModal}
+              hideModal={() => setShowBuyItemModal(false)}
+              chain={chain}
+              userAccount={userAccount}
+              nftAdress={nftAddress}
+              tokenId={tokenId}
+              price={priceInEther}
+            />
+
+            <div className="p-4 bg-yellow-50">
+              <Image
+                loader={() => imageURI}
+                unoptimized={true}
+                src={imageURI}
+                width={200}
+                height={200}
+                alt={imageDesc}
+              />
             </div>
-            <div className="flex flex-row items-center mt-4 text-lg">
-              <CryptoIcon name="eth" width={18} style={'color'} />
-              <div className="ml-2">{priceInEther} ETH</div>
+            <div className="font-bold text-slate-600 rounded-b-lg px-2">
+              <div className="text-lg mt-4">PixCats #{tokenId}</div>
+              <div className="italic text-sm">
+                Owned by {formattedSellerAddress}
+              </div>
+              <div className="flex flex-row items-center mt-4 text-lg">
+                <CryptoIcon name="eth" width={18} style={'color'} />
+                <div className="ml-2">{priceInEther} ETH</div>
+              </div>
             </div>
-          </div>
-        </>
-      )}
-    </Card>
+          </>
+        )}
+      </Card>
+    </div>
   );
 };
 
