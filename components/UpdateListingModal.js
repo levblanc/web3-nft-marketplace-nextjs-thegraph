@@ -8,7 +8,7 @@ const UpdateListingModal = ({
   tokenId,
   price,
 }) => {
-  setTwoToneColor('#faad14');
+  setTwoToneColor('#096dd9');
 
   const modalTitle = (
     <div className="flex flex-row items-center">
@@ -32,6 +32,8 @@ const UpdateListingModal = ({
         className="py-2 text-base"
         addonAfter="ETH"
         defaultValue={price}
+        step="0.01"
+        stringMode
       />
     </Modal>
   );

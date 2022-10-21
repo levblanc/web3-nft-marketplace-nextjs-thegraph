@@ -1,7 +1,7 @@
 import { Modal, Button } from 'antd';
 import { ExclamationCircleTwoTone, setTwoToneColor } from '@ant-design/icons';
-import { useMoralisWeb3Api, useMoralisWeb3ApiCall } from 'react-moralis';
 import { useEffect, useState } from 'react';
+import { useBalance } from 'wagmi';
 
 const BuyItemModal = ({
   isVisible,
@@ -12,9 +12,7 @@ const BuyItemModal = ({
   tokenId,
   price,
 }) => {
-  const web3Api = useMoralisWeb3Api();
-
-  setTwoToneColor('#faad14');
+  setTwoToneColor('#096dd9');
 
   const buyItemModalTitle = (
     <div className="flex flex-row items-center">
@@ -30,39 +28,35 @@ const BuyItemModal = ({
     </div>
   );
 
-  const [accountBalance, setAccountBalance] = useState(0);
-  const [isBalanceEnough, setIsBalanceEnough] = useState(true);
+  const [isBalanceEnough, setIsBalanceEnough] = useState(false);
+  let accountBalance = 0;
 
-  const chainStr = chainMapping[chain];
-
-  const {
-    data: account,
-    error,
-    isLoading,
-  } = useMoralisWeb3ApiCall(web3Api.account.getNativeBalance, {
-    chain: chain,
-    address: userAccount,
+  const { data: accountData, error: useBalanceError } = useBalance({
+    addressOrName: userAccount,
   });
 
-  useEffect(() => {
-    // console.log('isLoading', isLoading);
-    // console.log('account', account);
-    // console.log('error', error);
-    // setAccountBalance(account.balance);
+  if (useBalanceError) {
+    console.error(`Get account balance error: ${useBalanceError}`);
+  }
 
-    if (price > accountBalance) {
-      setIsBalanceEnough(false);
-    } else {
-      setIsBalanceEnough(true);
+  accountData && (accountBalance = accountData.formatted);
+
+  useEffect(() => {
+    if (accountBalance) {
+      if (price > accountBalance) {
+        setIsBalanceEnough(false);
+      } else {
+        setIsBalanceEnough(true);
+      }
     }
-  }, [price, accountBalance]);
+  }, [userAccount, accountBalance]);
 
   return isBalanceEnough ? (
     <Modal
       open={isVisible && isBalanceEnough}
       centered
       title={buyItemModalTitle}
-      closable={false}
+      onCancel={hideModal}
       footer={[
         <Button
           key="submit"
@@ -74,8 +68,10 @@ const BuyItemModal = ({
         </Button>,
       ]}
     >
-      <p className="py-5 text-base">NFT item you are going to buy:</p>
-      <p className="py-5 text-base font-bold">PixCat #{tokenId}</p>
+      <p className="py-5 text-base">
+        NFT item you are going to buy:
+        <span className="py-5 text-base font-bold">{` PixCat #${tokenId}`}</span>
+      </p>
     </Modal>
   ) : (
     <Modal

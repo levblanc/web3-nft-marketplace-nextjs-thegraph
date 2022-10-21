@@ -10,7 +10,10 @@ import Header from '../components/Header';
 
 const { chains, provider } = configureChains(
   [chain.goerli],
-  [alchemyProvider({ apiKey: process.env.ALCHEMY_API_KEY }), publicProvider()]
+  [
+    alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY }),
+    publicProvider(),
+  ]
 );
 
 const { connectors } = getDefaultWallets({
@@ -40,7 +43,7 @@ function MyApp({ Component, pageProps }) {
         <RainbowKitProvider chains={chains}>
           <ApolloProvider client={apolloClient}>
             <Header />
-            {/* <Component {...pageProps} /> */}
+            <Component {...pageProps} />
           </ApolloProvider>
         </RainbowKitProvider>
       </WagmiConfig>

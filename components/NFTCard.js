@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
-import { useWeb3Contract, useMoralis } from 'react-moralis';
 import { CryptoIcon } from 'next-crypto-icons';
 import { Card, Skeleton } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import Image from 'next/image';
 import { ethers } from 'ethers';
+import { useAccount } from 'wagmi';
 import marketplaceAbi from '../constants/marketplaceAbi.json';
 import dynamicNFTAbi from '../constants/dynamicNFTAbi.json';
 import { truncateAddress } from '../utils/formatter';
+import contractUtils from '../utils/contract';
 import UpdateListingModal from './UpdateListingModal';
 import CancelListingModal from './CancelListingModal';
 import BuyItemModal from './BuyItemModal';
@@ -20,8 +21,7 @@ const NFTBox = ({
   // marketplaceAddress,
   seller,
 }) => {
-  const { isWeb3Enabled, account } = useMoralis();
-  const [imageLoading, setImageLoading] = useState(true);
+  const { isDisconnected, address: userAccount } = useAccount();
   const [imageURI, setImageURI] = useState('');
   const [imageDesc, setImageDesc] = useState('');
   const [cardActions, setCardActions] = useState([]);
@@ -29,74 +29,91 @@ const NFTBox = ({
   const [showCancelListingModal, setShowCancelListingModal] = useState(false);
   const [showBuyItemModal, setShowBuyItemModal] = useState(false);
 
-  const ownedByUser = seller === account || seller === undefined;
+  const ownedByUser =
+    (seller === userAccount && userAccount.toLocaleLowerCase()) ||
+    seller === undefined;
   const formattedSellerAddress = ownedByUser ? 'you' : truncateAddress(seller);
   const priceInEther = ethers.utils.formatUnits(price, 'ether');
 
-  const { runContractFunction: getTokenURI } = useWeb3Contract({
+  const { data: tokenURI, error: readContractError } = contractUtils.read({
     abi: dynamicNFTAbi,
-    contractAddress: nftAddress,
+    address: nftAddress,
     functionName: 'tokenURI',
-    params: {
-      tokenId,
-    },
+    params: [tokenId],
+    enabled: !!tokenId,
   });
 
+  if (readContractError) {
+    console.error(`Read contract error: ${readContractError}`);
+  }
+
   /**
-   * @param tokenURI token URI
+   * @param {number} tokenURI token URI
    * @returns IPFS files from a 'normal' URL
    */
   const ipfsGateway = (tokenURI) => {
     return tokenURI.replace('ipfs://', 'https://ipfs.io/ipfs/');
   };
 
+  /**
+   * Update UI:
+   * 1. NFT card info: token ID, image, owner, price
+   * 2. NFT card actions based on owner
+   */
   const updateUI = async () => {
-    setImageLoading(true);
+    if (tokenURI) {
+      try {
+        const { image, description: imageDesc } = await (
+          await fetch(ipfsGateway(tokenURI))
+        ).json();
 
-    const tokenURI = await getTokenURI();
+        const imageURI = ipfsGateway(image);
 
-    const { image, description: imageDesc } = await (
-      await fetch(ipfsGateway(tokenURI))
-    ).json();
+        setImageURI(imageURI);
+        setImageDesc(imageDesc);
 
-    const imageURI = ipfsGateway(image);
-
-    setImageLoading(false);
-    setImageURI(imageURI);
-    setImageDesc(imageDesc);
-
-    if (ownedByUser) {
-      setCardActions([
-        <div
-          className="flex flex-row items-center justify-center hover:font-bold"
-          key="cancelListing"
-          onClick={() => showModal('cancel')}
-        >
-          <DeleteOutlined className="mr-2" />
-          Remove
-        </div>,
-        <div
-          className="flex flex-row items-center justify-center hover:font-bold"
-          key="updateListing"
-          onClick={() => showModal('update')}
-        >
-          <EditOutlined className="mr-2" />
-          Update
-        </div>,
-      ]);
-    } else {
-      setCardActions([
-        <div
-          className="flex flex-row items-center justify-center hover:font-bold"
-          key="updateListing"
-          onClick={() => showModal('buy')}
-        >
-          Buy NFT
-        </div>,
-      ]);
+        if (!userAccount) {
+          setCardActions([]);
+        } else if (ownedByUser) {
+          setCardActions([
+            <div
+              className="flex flex-row items-center justify-center hover:font-bold"
+              key="cancelListing"
+              onClick={() => showModal('cancel')}
+            >
+              <DeleteOutlined className="mr-2" />
+              Remove
+            </div>,
+            <div
+              className="flex flex-row items-center justify-center hover:font-bold"
+              key="updateListing"
+              onClick={() => showModal('update')}
+            >
+              <EditOutlined className="mr-2" />
+              Update
+            </div>,
+          ]);
+        } else {
+          setCardActions([
+            <div
+              className="flex flex-row items-center justify-center hover:font-bold"
+              key="updateListing"
+              onClick={() => showModal('buy')}
+            >
+              Buy NFT
+            </div>,
+          ]);
+        }
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
+  /**
+   * Show modal according to type
+   * @param {string} type modal type to show
+   */
   const showModal = (type) => {
     switch (type) {
       case 'update':
@@ -118,49 +135,53 @@ const NFTBox = ({
   };
 
   useEffect(() => {
-    if (isWeb3Enabled) {
+    if (!isDisconnected) {
       updateUI();
     }
-  }, [isWeb3Enabled]);
+
+    // Remove opening modal if user switches account
+    showUpdateListingModal && setShowUpdateListingModal(false);
+    showCancelListingModal && setShowCancelListingModal(false);
+    showBuyItemModal && setShowBuyItemModal(false);
+  }, [isDisconnected, userAccount]);
 
   return (
     <Card className="w-64 mr-5" hoverable actions={cardActions}>
-      <UpdateListingModal
-        key={'update-listing-modal'}
-        isVisible={showUpdateListingModal}
-        hideModal={() => setShowUpdateListingModal(false)}
-        nftAdress={nftAddress}
-        tokenId={tokenId}
-        price={priceInEther}
-      />
-
-      <CancelListingModal
-        key={'cancel-listing-modal'}
-        isVisible={showCancelListingModal}
-        hideModal={() => setShowCancelListingModal(false)}
-        nftAdress={nftAddress}
-        tokenId={tokenId}
-      />
-
-      <BuyItemModal
-        key={'buy-item-modal'}
-        isVisible={showBuyItemModal}
-        hideModal={() => setShowBuyItemModal(false)}
-        chain={chain}
-        userAccount={account}
-        nftAdress={nftAddress}
-        tokenId={tokenId}
-        price={priceInEther}
-      />
-
-      {/* {!imageURI ? ( */}
-      {imageLoading ? (
+      {!imageURI ? (
         <>
           <Skeleton.Image active={true} />
           <Skeleton className="mt-8" active={true} />
         </>
       ) : (
         <>
+          <UpdateListingModal
+            key={'update-listing-modal'}
+            isVisible={showUpdateListingModal}
+            hideModal={() => setShowUpdateListingModal(false)}
+            nftAdress={nftAddress}
+            tokenId={tokenId}
+            price={priceInEther}
+          />
+
+          <CancelListingModal
+            key={'cancel-listing-modal'}
+            isVisible={showCancelListingModal}
+            hideModal={() => setShowCancelListingModal(false)}
+            nftAdress={nftAddress}
+            tokenId={tokenId}
+          />
+
+          <BuyItemModal
+            key={'buy-item-modal'}
+            isVisible={showBuyItemModal}
+            hideModal={() => setShowBuyItemModal(false)}
+            chain={chain}
+            userAccount={userAccount}
+            nftAdress={nftAddress}
+            tokenId={tokenId}
+            price={priceInEther}
+          />
+
           <div className="p-4 bg-yellow-50">
             <Image
               loader={() => imageURI}
