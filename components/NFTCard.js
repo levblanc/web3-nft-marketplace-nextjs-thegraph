@@ -30,7 +30,7 @@ const NFTBox = ({
   const [showBuyItemModal, setShowBuyItemModal] = useState(false);
 
   const ownedByUser =
-    (seller === userAccount && userAccount.toLocaleLowerCase()) ||
+    (userAccount && seller === userAccount.toLocaleLowerCase()) ||
     seller === undefined;
   const formattedSellerAddress = ownedByUser ? 'you' : truncateAddress(seller);
   const priceInEther = ethers.utils.formatUnits(price, 'ether');
