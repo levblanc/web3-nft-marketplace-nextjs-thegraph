@@ -44,7 +44,7 @@ const NFTBox = ({
   });
 
   if (readContractError) {
-    console.error(`Read contract error: ${readContractError}`);
+    console.error('Read contract error', readContractError);
   }
 
   /**

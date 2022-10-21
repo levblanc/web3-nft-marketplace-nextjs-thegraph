@@ -36,7 +36,7 @@ const BuyItemModal = ({
   });
 
   if (useBalanceError) {
-    console.error(`Get account balance error: ${useBalanceError}`);
+    console.error('Get account balance error', useBalanceError);
   }
 
   accountData && (accountBalance = accountData.formatted);
