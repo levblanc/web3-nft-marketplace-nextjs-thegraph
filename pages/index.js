@@ -53,6 +53,7 @@ export default function Home() {
                         chain={chain}
                         price={price}
                         nftAddress={nftAddress}
+                        marketplaceAddress={marketplaceAddress}
                         tokenId={tokenId}
                         seller={seller}
                       />

@@ -18,7 +18,7 @@ const NFTBox = ({
   price,
   nftAddress,
   tokenId,
-  // marketplaceAddress,
+  marketplaceAddress,
   seller,
 }) => {
   const { isDisconnected, address: userAccount } = useAccount();
@@ -160,6 +160,7 @@ const NFTBox = ({
               isVisible={showUpdateListingModal}
               hideModal={() => setShowUpdateListingModal(false)}
               nftAdress={nftAddress}
+              marketplaceAddress={marketplaceAddress}
               tokenId={tokenId}
               price={priceInEther}
             />
@@ -169,6 +170,7 @@ const NFTBox = ({
               isVisible={showCancelListingModal}
               hideModal={() => setShowCancelListingModal(false)}
               nftAdress={nftAddress}
+              marketplaceAddress={marketplaceAddress}
               tokenId={tokenId}
             />
 
@@ -179,6 +181,7 @@ const NFTBox = ({
               chain={chain}
               userAccount={userAccount}
               nftAdress={nftAddress}
+              marketplaceAddress={marketplaceAddress}
               tokenId={tokenId}
               price={priceInEther}
             />
