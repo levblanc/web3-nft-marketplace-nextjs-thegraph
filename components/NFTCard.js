@@ -159,7 +159,7 @@ const NFTBox = ({
               key={'update-listing-modal'}
               isVisible={showUpdateListingModal}
               hideModal={() => setShowUpdateListingModal(false)}
-              nftAdress={nftAddress}
+              nftAddress={nftAddress}
               marketplaceAddress={marketplaceAddress}
               tokenId={tokenId}
               price={priceInEther}
@@ -169,7 +169,7 @@ const NFTBox = ({
               key={'cancel-listing-modal'}
               isVisible={showCancelListingModal}
               hideModal={() => setShowCancelListingModal(false)}
-              nftAdress={nftAddress}
+              nftAddress={nftAddress}
               marketplaceAddress={marketplaceAddress}
               tokenId={tokenId}
             />
@@ -180,7 +180,7 @@ const NFTBox = ({
               hideModal={() => setShowBuyItemModal(false)}
               chain={chain}
               userAccount={userAccount}
-              nftAdress={nftAddress}
+              nftAddress={nftAddress}
               marketplaceAddress={marketplaceAddress}
               tokenId={tokenId}
               price={priceInEther}

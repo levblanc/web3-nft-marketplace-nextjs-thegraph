@@ -8,7 +8,7 @@ import { ethers } from 'ethers';
 const UpdateListingModal = ({
   isVisible,
   hideModal: hideUpdateModal,
-  nftAdress,
+  nftAddress,
   marketplaceAddress,
   tokenId,
   price,
@@ -86,7 +86,7 @@ const UpdateListingModal = ({
     abi: marketplaceAbi,
     address: marketplaceAddress,
     functionName: 'updateListing',
-    params: [nftAdress, tokenId, ethers.utils.parseEther(listingPrice)],
+    params: [nftAddress, tokenId, ethers.utils.parseEther(listingPrice)],
     onSuccess: handleSuccess,
     onError: handleError,
   });
