@@ -117,7 +117,7 @@ const UpdateListingModal = ({
             <Button
               key="back"
               type="primary"
-              onClick={() => setUpdateError(false)}
+              onClick={() => setUpdateError('')}
             >
               OK
             </Button>,
