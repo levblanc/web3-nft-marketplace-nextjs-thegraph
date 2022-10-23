@@ -1,4 +1,4 @@
-import { Modal, InputNumber, Button } from 'antd';
+import { Modal, InputNumber, Button, notification } from 'antd';
 import { ExclamationCircleTwoTone, setTwoToneColor } from '@ant-design/icons';
 import { useState } from 'react';
 import contractUtils from '../utils/contract';
@@ -38,15 +38,27 @@ const UpdateListingModal = ({
     setListingPrice(value);
   };
 
-  const handleSuccess = (data) => {
-    console.log('write success!', data);
+  const handleSuccess = async (tx) => {
+    hideUpdateModal();
+
+    notification.info({
+      message: 'Updating listing price...',
+      description: 'Transaction is pending, please wait.',
+    });
+
+    try {
+      const resp = await tx.wait(1);
+
+      notification.success({
+        message: 'Transaction Confirmed!',
+        description: `Price of PixCat #${tokenId} updated! Please refresh page.`,
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleError = (error) => {
-    console.log('write error!', error);
-    console.log('error code!', error.code);
-    console.log('error code!', error.message);
-
     setListingPrice(price);
     hideUpdateModal();
 
@@ -70,14 +82,7 @@ const UpdateListingModal = ({
     hideUpdateModal();
   };
 
-  const {
-    data,
-    isWriteLoading,
-    isConfirmationLoading,
-    isConfirmationSuccess,
-    confirmationReceipt,
-    write: updateListing,
-  } = contractUtils.write({
+  const { write: updateListing } = contractUtils.write({
     abi: marketplaceAbi,
     address: marketplaceAddress,
     functionName: 'updateListing',
@@ -135,7 +140,6 @@ const UpdateListingModal = ({
               key="submit"
               type="primary"
               disabled={!enableUpdateBtn}
-              loading={isWriteLoading || isConfirmationLoading}
               onClick={updateListing}
             >
               Update

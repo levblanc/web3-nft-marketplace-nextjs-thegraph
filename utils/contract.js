@@ -26,9 +26,7 @@ const write = ({ abi, address, functionName, params, onSuccess, onError }) => {
   });
 
   const {
-    data: writeResponse,
     write,
-    isLoading: isWriteLoading,
     // eslint-disable-next-line react-hooks/rules-of-hooks
   } = useContractWrite({
     ...config,
@@ -36,29 +34,8 @@ const write = ({ abi, address, functionName, params, onSuccess, onError }) => {
     onError,
   });
 
-  console.log('isWriteLoading', isWriteLoading);
-  console.log('writeResponse', writeResponse);
-
-  const {
-    isLoading: isConfirmationLoading,
-    isSuccess: isConfirmationSuccess,
-    data: confirmationReceipt,
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-  } = useWaitForTransaction({
-    hash: writeResponse && writeResponse.hash,
-    confirmations: 1,
-  });
-
-  console.log('isConfirmationLoading', isConfirmationLoading);
-  console.log('isConfirmationSuccess', isConfirmationSuccess);
-  console.log('confirmationReceipt', confirmationReceipt);
-
   return {
     write,
-    isWriteLoading,
-    isConfirmationLoading,
-    isConfirmationSuccess,
-    confirmationReceipt,
   };
 };
 
