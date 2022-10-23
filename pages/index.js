@@ -10,6 +10,7 @@ import NFTCard from '../components/NFTCard';
 
 export default function Home() {
   setTwoToneColor('#f5222d');
+
   const {
     network: { chainId },
   } = useProvider();
@@ -42,7 +43,7 @@ export default function Home() {
           </div>
         ) : (
           <>
-            <h1 className="mr-5 my-10 font-bold text-2xl">Recently Listed</h1>
+            <h1 className="my-10 font-bold text-2xl">Recently Listed</h1>
             <div className="flex flex-wrap">
               {data &&
                 data.activeItems.map(
