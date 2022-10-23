@@ -47,7 +47,7 @@ const UpdateListingModal = ({
     });
 
     try {
-      const resp = await tx.wait(1);
+      await tx.wait(1);
 
       notification.success({
         message: 'Transaction Confirmed!',
@@ -105,65 +105,57 @@ const UpdateListingModal = ({
     </div>
   );
 
-  return (
-    <>
-      {updateError ? (
-        <Modal
-          open={true}
-          centered
-          title={errorTitle}
-          closable={false}
-          footer={[
-            <Button
-              key="back"
-              type="primary"
-              onClick={() => setUpdateError('')}
-            >
-              OK
-            </Button>,
-          ]}
+  return updateError ? (
+    <Modal
+      open={true}
+      centered
+      title={errorTitle}
+      closable={false}
+      footer={[
+        <Button key="back" type="primary" onClick={() => setUpdateError('')}>
+          OK
+        </Button>,
+      ]}
+    >
+      {updateError}
+    </Modal>
+  ) : (
+    <Modal
+      open={isVisible}
+      centered
+      title={modalTitle}
+      closable={false}
+      destroyOnClose={true}
+      footer={[
+        <Button key="back" onClick={handleCancelUpdate}>
+          Cancel
+        </Button>,
+        <Button
+          key="submit"
+          type="primary"
+          disabled={!enableUpdateBtn}
+          onClick={updateListing}
         >
-          {updateError}
-        </Modal>
-      ) : (
-        <Modal
-          open={isVisible}
-          centered
-          title={modalTitle}
-          closable={false}
-          destroyOnClose={true}
-          footer={[
-            <Button key="back" onClick={handleCancelUpdate}>
-              Cancel
-            </Button>,
-            <Button
-              key="submit"
-              type="primary"
-              disabled={!enableUpdateBtn}
-              onClick={updateListing}
-            >
-              Update
-            </Button>,
-          ]}
-        >
-          <InputNumber
-            className="py-2 text-base"
-            addonAfter="ETH"
-            min={0}
-            defaultValue={price}
-            value={listingPrice}
-            step="0.01"
-            stringMode
-            status={priceError && 'error'}
-            prefix={
-              priceError && <ExclamationCircleTwoTone twoToneColor="#f5222d" />
-            }
-            onChange={handleInputChange}
-          />
-          {priceError && <div className="text-red-700">{priceError}</div>}
-        </Modal>
-      )}
-    </>
+          Update
+        </Button>,
+      ]}
+    >
+      <InputNumber
+        className="py-2 text-base"
+        addonAfter="ETH"
+        min={0}
+        defaultValue={price}
+        value={listingPrice}
+        step="0.01"
+        stringMode
+        status={priceError && 'error'}
+        prefix={
+          priceError && <ExclamationCircleTwoTone twoToneColor="#f5222d" />
+        }
+        onChange={handleInputChange}
+      />
+      {priceError && <div className="text-red-700">{priceError}</div>}
+    </Modal>
   );
 };
 

@@ -24,7 +24,7 @@ const CancelListingModal = ({
     });
 
     try {
-      const resp = await tx.wait(1);
+      await tx.wait(1);
 
       notification.success({
         message: 'Transaction Confirmed!',
