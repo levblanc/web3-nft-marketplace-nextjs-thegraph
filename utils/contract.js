@@ -25,18 +25,12 @@ const write = ({ abi, address, functionName, params, onSuccess, onError }) => {
     args: params,
   });
 
-  const {
-    write,
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-  } = useContractWrite({
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  return useContractWrite({
     ...config,
     onSuccess,
     onError,
   });
-
-  return {
-    write,
-  };
 };
 
 const contract = { read, write };
