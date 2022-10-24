@@ -25,6 +25,7 @@ const { connectors } = getDefaultWallets({
 const wagmiClient = createClient({
   connectors,
   provider,
+  autoConnect: true,
 });
 
 const apolloClient = new ApolloClient({
