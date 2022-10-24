@@ -15,7 +15,17 @@ const Header = () => {
           </Link>
         </div>
       </div>
-      <ConnectButton />
+      <ConnectButton
+        showNetwork
+        accountStatus={{
+          smallScreen: 'avatar',
+          largeScreen: 'full',
+        }}
+        chainStatus={{
+          smallScreen: 'icon',
+          largeScreen: 'full',
+        }}
+      />
     </nav>
   );
 };
