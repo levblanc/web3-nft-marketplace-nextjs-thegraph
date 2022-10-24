@@ -89,6 +89,7 @@ const UpdateListingModal = ({
     params: [nftAddress, tokenId, ethers.utils.parseEther(listingPrice)],
     onSuccess: handleSuccess,
     onError: handleError,
+    enabled: listingPrice !== price,
   });
 
   const modalTitle = (

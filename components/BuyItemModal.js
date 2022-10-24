@@ -78,6 +78,7 @@ const BuyItemModal = ({
     params: [nftAddress, tokenId, { value: ethers.utils.parseEther(price) }],
     onSuccess: handleSuccess,
     onError: handleError,
+    enabled: nftAddress && tokenId && price,
   });
 
   const buyItemModalTitle = (
