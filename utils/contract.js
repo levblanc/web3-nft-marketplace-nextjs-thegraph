@@ -16,13 +16,22 @@ const read = ({ abi, address, functionName, params, enabled }) => {
   });
 };
 
-const write = ({ abi, address, functionName, params, onSuccess, onError }) => {
+const write = ({
+  abi,
+  address,
+  functionName,
+  params,
+  onSuccess,
+  onError,
+  enabled,
+}) => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const { config, error: prepareWriteError } = usePrepareContractWrite({
     abi,
     address,
     functionName,
     args: params,
+    enabled,
   });
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -30,6 +39,7 @@ const write = ({ abi, address, functionName, params, onSuccess, onError }) => {
     ...config,
     onSuccess,
     onError,
+    enabled,
   });
 };
 
