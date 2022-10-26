@@ -37,13 +37,13 @@ export default function Home() {
         loading ? (
           <Skeleton className="mt-10" active={true} />
         ) : fetchActiveItemError ? (
-          <div className="items-center mt-20">
+          <div className="tipsBox">
             <ExclamationCircleTwoTone style={{ fontSize: '50px' }} />
             <div className="mt-5 text-xl">Network Error, please retry.</div>
           </div>
         ) : (
           <>
-            <h1 className="itemListTitle my-10 font-bold text-2xl">
+            <h1 className="pageTitle my-10 font-bold text-2xl">
               Recently Listed
             </h1>
             <div className="flex flex-wrap">
@@ -67,8 +67,8 @@ export default function Home() {
           </>
         )
       ) : (
-        <div className="flex flex-col items-center">
-          <p className="font-bold text-xl text-center pt-20 pb-10">
+        <div className="tipsBox">
+          <p className="text-xl mb-8">
             Connect a wallet to use NFT Marketplace
           </p>
           <ConnectButton />
