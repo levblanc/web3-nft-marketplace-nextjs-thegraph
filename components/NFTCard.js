@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react';
 import { CryptoIcon } from 'next-crypto-icons';
 import { Card, Skeleton } from 'antd';
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import {
+  EditOutlined,
+  DeleteOutlined,
+  ShoppingOutlined,
+} from '@ant-design/icons';
 import Image from 'next/image';
 import { ethers } from 'ethers';
 import { useAccount } from 'wagmi';
@@ -77,30 +81,31 @@ const NFTBox = ({
         } else if (ownedByUser) {
           setCardActions([
             <div
-              className="flex flex-row items-center justify-center hover:font-bold"
+              className="nftCardAction sellerAction w-1/2"
               key="cancelListing"
               onClick={() => showModal('cancel')}
             >
               <DeleteOutlined className="mr-2" />
-              Remove
+              <span>Remove</span>
             </div>,
             <div
-              className="flex flex-row items-center justify-center hover:font-bold"
+              className="nftCardAction sellerAction w-1/2"
               key="updateListing"
               onClick={() => showModal('update')}
             >
               <EditOutlined className="mr-2" />
-              Update
+              <span>Update</span>
             </div>,
           ]);
         } else {
           setCardActions([
             <div
-              className="flex flex-row items-center justify-center hover:font-bold"
+              className="nftCardAction buyerAction w-full"
               key="updateListing"
               onClick={() => showModal('buy')}
             >
-              Buy NFT
+              <ShoppingOutlined className="mr-2" />
+              <span>Buy NFT</span>
             </div>,
           ]);
         }
@@ -146,69 +151,74 @@ const NFTBox = ({
   }, [isDisconnected, userAccount]);
 
   return (
-    <div className="w-64 mr-5 mb-5">
-      <Card hoverable actions={cardActions}>
-        {!imageURI ? (
-          <>
-            <Skeleton.Image active={true} width={220} height={220} />
-            <Skeleton className="mt-8" active={true} />
-          </>
-        ) : (
-          <>
-            <UpdateListingModal
-              key={'update-listing-modal'}
-              isVisible={showUpdateListingModal}
-              hideModal={() => setShowUpdateListingModal(false)}
-              nftAddress={nftAddress}
-              marketplaceAddress={marketplaceAddress}
-              tokenId={tokenId}
-              price={priceInEther}
-            />
+    <div className="nftCard mr-5 mb-5 rounded-lg">
+      {!imageURI ? (
+        <div className="m-5 p-3">
+          <Skeleton.Image active={true} width={200} height={200} />
+          <Skeleton className="mt-8" active={true} />
+        </div>
+      ) : (
+        <>
+          <UpdateListingModal
+            key={'update-listing-modal'}
+            isVisible={showUpdateListingModal}
+            hideModal={() => setShowUpdateListingModal(false)}
+            nftAddress={nftAddress}
+            marketplaceAddress={marketplaceAddress}
+            tokenId={tokenId}
+            price={priceInEther}
+          />
 
-            <CancelListingModal
-              key={'cancel-listing-modal'}
-              isVisible={showCancelListingModal}
-              hideModal={() => setShowCancelListingModal(false)}
-              nftAddress={nftAddress}
-              marketplaceAddress={marketplaceAddress}
-              tokenId={tokenId}
-            />
+          <CancelListingModal
+            key={'cancel-listing-modal'}
+            isVisible={showCancelListingModal}
+            hideModal={() => setShowCancelListingModal(false)}
+            nftAddress={nftAddress}
+            marketplaceAddress={marketplaceAddress}
+            tokenId={tokenId}
+          />
 
-            <BuyItemModal
-              key={'buy-item-modal'}
-              isVisible={showBuyItemModal}
-              hideModal={() => setShowBuyItemModal(false)}
-              chain={chain}
-              userAccount={userAccount}
-              nftAddress={nftAddress}
-              marketplaceAddress={marketplaceAddress}
-              tokenId={tokenId}
-              price={priceInEther}
-            />
+          <BuyItemModal
+            key={'buy-item-modal'}
+            isVisible={showBuyItemModal}
+            hideModal={() => setShowBuyItemModal(false)}
+            chain={chain}
+            userAccount={userAccount}
+            nftAddress={nftAddress}
+            marketplaceAddress={marketplaceAddress}
+            tokenId={tokenId}
+            price={priceInEther}
+          />
 
-            <div className="p-4 bg-yellow-50">
-              <Image
-                loader={() => imageURI}
-                unoptimized={true}
-                src={imageURI}
-                width={200}
-                height={200}
-                alt={imageDesc}
-              />
+          <div className="m-5 p-3">
+            <Image
+              loader={() => imageURI}
+              unoptimized={true}
+              src={imageURI}
+              width={150}
+              height={150}
+              alt={imageDesc}
+            />
+          </div>
+          <div className="nftDesc font-bold rounded-b-lg px-6">
+            <div className="text-lg mt-4">PixCats #{tokenId}</div>
+            <div className="italic text-sm">
+              Owned by {formattedSellerAddress}
             </div>
-            <div className="font-bold text-slate-600 rounded-b-lg px-2">
-              <div className="text-lg mt-4">PixCats #{tokenId}</div>
-              <div className="italic text-sm">
-                Owned by {formattedSellerAddress}
-              </div>
-              <div className="flex flex-row items-center mt-4 text-lg">
-                <CryptoIcon name="eth" width={18} style={'color'} />
-                <div className="ml-2">{priceInEther} ETH</div>
-              </div>
+            <div className="flex flex-row items-center mt-4 text-lg">
+              <CryptoIcon name="eth" width={18} style={'color'} />
+              <div className="ml-2">{priceInEther} ETH</div>
             </div>
-          </>
-        )}
-      </Card>
+          </div>
+        </>
+      )}
+      {cardActions && (
+        <div className="nftCardActionWrapper">
+          {cardActions.map((action, index) => {
+            return action;
+          })}
+        </div>
+      )}
     </div>
   );
 };

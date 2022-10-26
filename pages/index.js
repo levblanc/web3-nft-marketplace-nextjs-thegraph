@@ -43,7 +43,9 @@ export default function Home() {
           </div>
         ) : (
           <>
-            <h1 className="my-10 font-bold text-2xl">Recently Listed</h1>
+            <h1 className="itemListTitle my-10 font-bold text-2xl">
+              Recently Listed
+            </h1>
             <div className="flex flex-wrap">
               {data &&
                 data.activeItems.map(

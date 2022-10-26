@@ -1,3 +1,107 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --linear-gradient-low-transparency: linear-gradient(
+    45deg,
+    rgba(77, 33, 252, 0.7) 0%,
+    rgba(179, 98, 255, 0.7) 65%,
+    rgba(251, 148, 255, 0.7) 100%
+  );
+  --linear-gradient-high-transparency: linear-gradient(
+    45deg,
+    rgba(77, 33, 252, 0.3) 0%,
+    rgba(179, 98, 255, 0.3) 65%,
+    rgba(251, 148, 255, 0.3) 100%
+  );
+}
+
+body {
+  background-color: #2d2b55;
+}
+
+#container {
+  background-color: #2d2b55;
+  height: 100%;
+  min-height: 100vh;
+}
+
+nav {
+  background: #fad000;
+}
+
+.appName {
+  color: #2d2b55;
+}
+
+.link {
+  color: #a599e9;
+  font-weight: bold;
+}
+
+.link:hover {
+  background: #ffee80;
+  color: #4d21fc;
+}
+
+.itemListTitle {
+  color: #fad000;
+}
+
+.nftCard {
+  width: 235px;
+  background: var(--linear-gradient-high-transparency);
+  box-sizing: border-box;
+  transition: all 0.2s linear;
+}
+
+.nftCard:hover {
+  background: var(--linear-gradient-low-transparency);
+  transform: scale(1.03);
+}
+
+.nftDesc {
+  color: #faefa5;
+}
+
+.nftCard:hover .nftDesc {
+  color: #fad000;
+}
+
+.nftCardActionWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-top: 10px;
+}
+
+.nftCardAction {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  color: #a599e9;
+  text-align: center;
+}
+
+.nftCardAction:hover {
+  font-weight: bold;
+  cursor: pointer;
+  background: #fad000;
+  color: #4d21fc;
+}
+
+.sellerAction:first-child {
+  border-bottom-left-radius: 8px;
+}
+
+.sellerAction:last-child {
+  border-bottom-right-radius: 8px;
+}
+
+.buyerAction {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}

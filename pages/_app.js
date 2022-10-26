@@ -35,7 +35,7 @@ const apolloClient = new ApolloClient({
 
 function MyApp({ Component, pageProps }) {
   return (
-    <div>
+    <div id="container">
       <Head>
         <title>NFT Marketplace</title>
         <meta name="description" content="NFT Marketplace" />
