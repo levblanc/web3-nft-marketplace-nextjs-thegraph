@@ -25,8 +25,12 @@ const write = ({
   onError,
   enabled,
 }) => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { config, error: prepareWriteError } = usePrepareContractWrite({
+  const {
+    config,
+    error: prepareWriteError,
+    refetch,
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+  } = usePrepareContractWrite({
     abi,
     address,
     functionName,
@@ -35,12 +39,13 @@ const write = ({
   });
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  return useContractWrite({
+  const writeResults = useContractWrite({
     ...config,
     onSuccess,
     onError,
-    enabled,
   });
+
+  return { refetch, prepareWriteError, ...writeResults };
 };
 
 const contract = { read, write };

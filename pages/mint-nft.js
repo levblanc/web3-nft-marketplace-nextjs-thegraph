@@ -1,7 +1,8 @@
-import { Modal, InputNumber, Button, notification } from 'antd';
+import { Modal, Button, notification } from 'antd';
 import { ExclamationCircleTwoTone, setTwoToneColor } from '@ant-design/icons';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useAccount, useProvider } from 'wagmi';
+import Link from 'next/link';
 import { useState } from 'react';
 import { ethers } from 'ethers';
 import contractAddresses from '../constants/contractAddresses.json';
@@ -22,42 +23,6 @@ const MintNFT = () => {
   const [enableMintBtn, setEnableMintBtn] = useState(true);
   const [mintError, setMintError] = useState(false);
   const [txHash, setTxHash] = useState(null);
-  const [tokenId, setTokenId] = useState('');
-  const [tokenIdError, setTokenIdError] = useState('');
-  const [enableApproveBtn, setEnableApproveBtn] = useState(true);
-  const [nftApproved, setNftApproved] = useState(false);
-  const [listingPrice, setListingPrice] = useState('');
-  const [priceInEther, setPriceInEther] = useState(listingPrice);
-  const [priceError, setPriceError] = useState('');
-  const [enableListingBtn, setEnableListingBtn] = useState(false);
-
-  const handleTokenIdChange = (value) => {
-    if (!value) {
-      setPriceError('Token ID can not be empty!');
-      enableApproveBtn && setEnableApproveBtn(false);
-    } else {
-      tokenIdError && setTokenIdError('');
-      setEnableApproveBtn(true);
-    }
-
-    setTokenId(value);
-  };
-
-  const handlePriceChange = (value) => {
-    if (!value) {
-      setPriceError('Item price can not be empty!');
-      enableListingBtn && setEnableListingBtn(false);
-    } else if (value === '0') {
-      setPriceError('Item price must be greater than 0');
-      enableListingBtn && setEnableListingBtn(false);
-    } else {
-      priceError && setPriceError('');
-      setEnableListingBtn(true);
-    }
-
-    setListingPrice(value);
-    setPriceInEther(ethers.utils.parseEther(value));
-  };
 
   const handleMintSuccess = async (tx) => {
     notification.info({
@@ -76,48 +41,6 @@ const MintNFT = () => {
       notification.success({
         message: 'Transaction Confirmed!',
         description: `NFT minted!`,
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handleApprovalSuccess = async (tx) => {
-    notification.info({
-      message: 'Approving NFT...',
-      description: 'Transaction is pending, please wait.',
-    });
-
-    try {
-      await tx.wait(1);
-
-      setNftApproved(true);
-      setTokenId('');
-
-      notification.success({
-        message: 'Transaction Confirmed!',
-        description: `NFT approved!`,
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handleListingSuccess = async (tx) => {
-    notification.info({
-      message: 'Listing NFT...',
-      description: 'Transaction is pending, please wait.',
-    });
-
-    try {
-      await tx.wait(1);
-
-      setListingPrice('0');
-      setPriceInEther(listingPrice);
-
-      notification.success({
-        message: 'Transaction Confirmed!',
-        description: `NFT Listed!`,
       });
     } catch (error) {
       console.error(error);
@@ -148,27 +71,6 @@ const MintNFT = () => {
     onSuccess: handleMintSuccess,
     onError: handleError,
     enabled: targetNum,
-  });
-
-  const { write: approveNFT, isLoading: approveNFTLoading } =
-    contractUtils.write({
-      abi: dynamicNFTAbi,
-      address: dynamicNFTAddress,
-      functionName: 'approve',
-      params: [marketplaceAddress, tokenId],
-      onSuccess: handleApprovalSuccess,
-      onError: handleError,
-      enabled: tokenId,
-    });
-
-  const { write: listItem, isLoading: listItemLoading } = contractUtils.write({
-    abi: marketplaceAbi,
-    address: marketplaceAddress,
-    functionName: 'listItem',
-    params: [dynamicNFTAddress, tokenId, priceInEther],
-    onSuccess: handleListingSuccess,
-    onError: handleError,
-    enabled: tokenId && listingPrice,
   });
 
   let numberButtons = [];
@@ -219,10 +121,8 @@ const MintNFT = () => {
             {mintError}
           </Modal>
         ) : (
-          <div>
-            <h1 className="my-10 font-bold text-2xl">
-              Mint and List your NFT to Marketplace
-            </h1>
+          <>
+            <h1 className="my-10 font-bold text-2xl">Mint your NFT</h1>
             <div className="">
               {/* Pick target NFT number */}
               <div className="font-bold text-xl mb-2">Pick a number</div>
@@ -240,105 +140,35 @@ const MintNFT = () => {
               >
                 Mint NFT
               </Button>
-              {/* List to Marketplace */}
-              {txHash && (
-                <>
-                  <p className="text-lg mb-3">
-                    NFT minted! Transaction hash is {txHash}
-                  </p>
-                  <p className="text-base italic mb-10">
-                    Follow instructions below to list your NFT or{' '}
-                    <a href={`https://goerli.etherscan.io/tx/${txHash}`}>
-                      check it on goerli.etherscan.io
-                    </a>
-                  </p>
-                  {/* Approve for Marketplace to sell the NFT */}
-                  <div className="font-bold text-xl mb-2">
-                    Approve Marketplace to List your NFT
-                  </div>
-                  <div className="italic mb-4">
-                    Set the token ID of your NFT
-                  </div>
-                  <div>
-                    <InputNumber
-                      className="py-2 mb-3 text-base"
-                      disabled={!txHash || approveNFTLoading}
-                      min={0}
-                      step="1"
-                      value={tokenId}
-                      placeholder="Set token ID"
-                      stringMode
-                      status={tokenIdError}
-                      prefix={
-                        tokenIdError && (
-                          <ExclamationCircleTwoTone twoToneColor="#f5222d" />
-                        )
-                      }
-                      onChange={handleTokenIdChange}
-                    />
-                    {tokenIdError && (
-                      <div className="text-red-700">{tokenIdError}</div>
-                    )}
-                  </div>
-                  <Button
-                    className="mt-3 mb-10"
-                    type="primary"
-                    disabled={
-                      !tokenId || !enableApproveBtn || approveNFTLoading
-                    }
-                    loading={approveNFTLoading}
-                    onClick={approveNFT}
-                  >
-                    Approve to List
-                  </Button>
-                  {/* Price input */}
-                  <div className="font-bold text-xl mb-2">
-                    Set a Price & List Item
-                  </div>
-                  <div className="italic mb-4">
-                    Set the selling price of your NFT
-                  </div>
-                  <div>
-                    <InputNumber
-                      className="py-2 mb-3 text-base"
-                      addonAfter="ETH"
-                      disabled={!tokenId && !nftApproved}
-                      min={0}
-                      step="0.01"
-                      value={listingPrice}
-                      placeholder="Set NFT price"
-                      stringMode
-                      status={nftApproved && priceError}
-                      prefix={
-                        nftApproved &&
-                        priceError && (
-                          <ExclamationCircleTwoTone twoToneColor="#f5222d" />
-                        )
-                      }
-                      onChange={handlePriceChange}
-                    />
-                    {nftApproved && priceError && (
-                      <div className="text-red-700">{priceError}</div>
-                    )}
-                  </div>
-                  <Button
-                    className="mt-3"
-                    type="primary"
-                    disabled={
-                      !listingPrice ||
-                      !nftApproved ||
-                      listItemLoading ||
-                      !enableListingBtn
-                    }
-                    loading={listItemLoading}
-                    onClick={listItem}
-                  >
-                    List Item
-                  </Button>
-                </>
-              )}
             </div>
-          </div>
+            {/* Instructions to get token ID & list NFT */}
+            {txHash && (
+              <>
+                <p className="text-lg mb-3">
+                  NFT minted! Transaction hash is {txHash}
+                </p>
+                <p>
+                  1.{' '}
+                  <Link
+                    href={`https://goerli.etherscan.io/tx/${txHash}`}
+                    target="_blank"
+                  >
+                    <a className="text-base italic my-5">
+                      Check your token ID on goerli.etherscan.io
+                    </a>
+                  </Link>
+                </p>
+                <p>
+                  2.{' '}
+                  <Link href="/list-nft">
+                    <a className="text-base italic my-5">
+                      List & Sell your NFT now!
+                    </a>
+                  </Link>
+                </p>
+              </>
+            )}
+          </>
         )
       ) : (
         <div className="flex flex-col items-center">
