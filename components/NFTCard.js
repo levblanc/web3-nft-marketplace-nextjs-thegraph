@@ -146,11 +146,11 @@ const NFTBox = ({
   }, [isDisconnected, userAccount]);
 
   return (
-    <div className="w-64 mr-5">
+    <div className="w-64 mr-5 mb-5">
       <Card hoverable actions={cardActions}>
         {!imageURI ? (
           <>
-            <Skeleton.Image active={true} />
+            <Skeleton.Image active={true} width={220} height={220} />
             <Skeleton className="mt-8" active={true} />
           </>
         ) : (
