@@ -155,7 +155,7 @@ const UpdateListingModal = ({
         }
         onChange={handleInputChange}
       />
-      {priceError && <div className="text-red-700">{priceError}</div>}
+      {priceError && <div className="text-[#EC3A37F5]">{priceError}</div>}
     </Modal>
   );
 };
