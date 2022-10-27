@@ -35,12 +35,12 @@ nav {
   color: #2d2b55;
 }
 
-.link {
+.navLink {
   color: #a599e9;
   font-weight: bold;
 }
 
-.link:hover {
+.navLink:hover {
   background: #ffee80;
   color: #4d21fc;
 }

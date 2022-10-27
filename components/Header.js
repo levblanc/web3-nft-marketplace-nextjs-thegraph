@@ -10,13 +10,13 @@ const Header = () => {
         </h1>
         <div className="flex flex-row items-center text-lg">
           <Link href="/">
-            <a className="link mr-4 p-5">Home</a>
+            <a className="navLink mr-4 p-5">Home</a>
           </Link>
           <Link href="/mint-nft">
-            <a className="link mr-4 p-5">Mint NFT</a>
+            <a className="navLink mr-4 p-5">Mint NFT</a>
           </Link>
           <Link href="/list-nft">
-            <a className="link mr-4 p-5">List NFT</a>
+            <a className="navLink mr-4 p-5">List NFT</a>
           </Link>
         </div>
       </div>
