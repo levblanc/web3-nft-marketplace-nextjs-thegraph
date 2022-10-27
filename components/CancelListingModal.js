@@ -11,7 +11,7 @@ const CancelListingModal = ({
   nftAddress,
   tokenId,
 }) => {
-  setTwoToneColor('#f5222d');
+  setTwoToneColor('#EC3A37F5');
 
   const [cancelError, setCancelError] = useState('');
 
@@ -64,14 +64,14 @@ const CancelListingModal = ({
 
   const modalTitle = (
     <div className="flex flex-row items-center">
-      <ExclamationCircleTwoTone className="mr-2" style={{ fontSize: '20px' }} />
+      <ExclamationCircleTwoTone className="mr-2" style={{ fontSize: '18px' }} />
       Confrim Remove Item
     </div>
   );
 
   const errorTitle = (
     <div className="flex flex-row items-center">
-      <ExclamationCircleTwoTone className="mr-2" style={{ fontSize: '20px' }} />
+      <ExclamationCircleTwoTone className="mr-2" style={{ fontSize: '18px' }} />
       Error Canceling Item Listing
     </div>
   );
@@ -102,15 +102,18 @@ const CancelListingModal = ({
           centered
           title={modalTitle}
           closable={false}
-          okType="danger"
-          okText="Confirm"
-          cancelText="Cancel"
-          onOk={cancelListing}
-          onCancel={hideModal}
+          footer={[
+            <Button key="back" onClick={hideModal}>
+              Cancel
+            </Button>,
+            <Button key="confirm" type="primary" danger onClick={cancelListing}>
+              Confirm
+            </Button>,
+          ]}
         >
-          <p className="py-5 text-base">
+          <p className="py-5 text-base text-[#A599E9]">
             Please confirm to
-            <span className="font-bold text-red-500">{' remove '}</span>
+            <span className="font-bold text-[#EC3A37F5]">{' remove '}</span>
             item PixCat #{tokenId} from listing
           </p>
         </Modal>

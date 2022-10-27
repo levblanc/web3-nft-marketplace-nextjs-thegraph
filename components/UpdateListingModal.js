@@ -13,7 +13,7 @@ const UpdateListingModal = ({
   tokenId,
   price,
 }) => {
-  setTwoToneColor('#096dd9');
+  setTwoToneColor('#4D21FC');
 
   const [enableUpdateBtn, setEnableUpdateBtn] = useState(false);
   const [listingPrice, setListingPrice] = useState(price);
@@ -94,14 +94,14 @@ const UpdateListingModal = ({
 
   const modalTitle = (
     <div className="flex flex-row items-center">
-      <ExclamationCircleTwoTone className="mr-2" style={{ fontSize: '20px' }} />
+      <ExclamationCircleTwoTone className="mr-2" style={{ fontSize: '18px' }} />
       Update Listing Price
     </div>
   );
 
   const errorTitle = (
     <div className="flex flex-row items-center">
-      <ExclamationCircleTwoTone className="mr-2" style={{ fontSize: '20px' }} />
+      <ExclamationCircleTwoTone className="mr-2" style={{ fontSize: '18px' }} />
       Error Updating Listing Price
     </div>
   );

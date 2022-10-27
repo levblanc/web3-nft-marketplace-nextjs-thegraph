@@ -16,7 +16,7 @@ const BuyItemModal = ({
   tokenId,
   price,
 }) => {
-  setTwoToneColor('#096dd9');
+  setTwoToneColor('#4D21FC');
 
   const [isBalanceEnough, setIsBalanceEnough] = useState(false);
   const [buyItemError, setBuyItemError] = useState('');
@@ -83,14 +83,14 @@ const BuyItemModal = ({
 
   const buyItemModalTitle = (
     <div className="flex flex-row items-center">
-      <ExclamationCircleTwoTone className="mr-2" style={{ fontSize: '20px' }} />
+      <ExclamationCircleTwoTone className="mr-2" style={{ fontSize: '18px' }} />
       Confrim order
     </div>
   );
 
   const balanceNotEnoughModalTitle = (
     <div className="flex flex-row items-center">
-      <ExclamationCircleTwoTone className="mr-2" style={{ fontSize: '20px' }} />
+      <ExclamationCircleTwoTone className="mr-2" style={{ fontSize: '18px' }} />
       Balance Not Enough
     </div>
   );
@@ -99,7 +99,7 @@ const BuyItemModal = ({
     <div className="flex flex-row items-center">
       <ExclamationCircleTwoTone
         className="mr-2"
-        style={{ fontSize: '20px' }}
+        style={{ fontSize: '18px' }}
         twoToneColor="#cf1322"
       />
       Error Updating Listing Price
@@ -143,9 +143,9 @@ const BuyItemModal = ({
           </Button>,
         ]}
       >
-        <p className="py-5 text-base">
+        <p className="py-5 text-base text-[#A599E9]">
           NFT item you are going to buy:
-          <span className="py-5 text-base font-bold">{` PixCat #${tokenId}`}</span>
+          <span className="py-5 text-base font-bold text-[#FFEE80]">{` PixCat #${tokenId}`}</span>
         </p>
       </Modal>
     )
