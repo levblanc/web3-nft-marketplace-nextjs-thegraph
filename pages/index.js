@@ -32,10 +32,13 @@ export default function Home() {
   }, [isDisconnected]);
 
   return (
-    <div className="container mx-auto text-slate-800">
+    <div className="container mx-auto">
       {!isDisconnected ? (
         loading ? (
-          <Skeleton className="mt-10" active={true} />
+          <>
+            <Skeleton className="mt-40" active={true} />
+            <Skeleton className="my-20" active={true} />
+          </>
         ) : fetchActiveItemError ? (
           <div className="tipsBox">
             <ExclamationCircleTwoTone style={{ fontSize: '50px' }} />
