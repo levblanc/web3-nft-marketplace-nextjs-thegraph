@@ -45,6 +45,22 @@ nav {
   color: #4d21fc;
 }
 
+.footer {
+  color: #4D21FC;
+  text-align: center;
+  padding: 30px 20px 20px;
+}
+
+.footerLink {
+  display: block;
+  transition: all 0.2s linear;
+}
+
+.footerLink:hover {
+  text-decoration: underline;
+  transform: scale(1.03);
+}
+
 .pageTitle {
   color: #fad000;
 }

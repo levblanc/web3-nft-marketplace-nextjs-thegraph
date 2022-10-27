@@ -8,6 +8,7 @@ import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 import Head from 'next/head';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 const { chains, provider } = configureChains(
   [chain.goerli],
@@ -46,6 +47,7 @@ function MyApp({ Component, pageProps }) {
           <ApolloProvider client={apolloClient}>
             <Header />
             <Component {...pageProps} />
+            <Footer />
           </ApolloProvider>
         </RainbowKitProvider>
       </WagmiConfig>
