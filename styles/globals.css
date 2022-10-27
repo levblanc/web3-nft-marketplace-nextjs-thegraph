@@ -74,6 +74,11 @@ nav {
   transform: scale(1.03);
 }
 
+.nftImage {
+  width: 150px;
+  margin: 20px auto;
+}
+
 .nftDesc {
   color: #faefa5;
 }

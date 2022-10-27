@@ -153,8 +153,8 @@ const NFTBox = ({
   return (
     <div className="nftCard mr-5 mb-5 rounded-lg">
       {!imageURI ? (
-        <div className="m-5 p-3">
-          <Skeleton.Image active={true} width={200} height={200} />
+        <div className="m-5 flex flex-col items-center">
+          <Skeleton.Image active={true} style={{ width: 150, height: 150 }} />
           <Skeleton className="mt-8" active={true} />
         </div>
       ) : (
@@ -190,7 +190,7 @@ const NFTBox = ({
             price={priceInEther}
           />
 
-          <div className="m-5 p-3">
+          <div className="nftImage">
             <Image
               loader={() => imageURI}
               unoptimized={true}
@@ -200,7 +200,7 @@ const NFTBox = ({
               alt={imageDesc}
             />
           </div>
-          <div className="nftDesc font-bold rounded-b-lg px-6">
+          <div className="nftDesc font-bold rounded-b-lg px-5">
             <div className="text-lg mt-4">PixCats #{tokenId}</div>
             <div className="italic text-sm">
               Owned by {formattedSellerAddress}
