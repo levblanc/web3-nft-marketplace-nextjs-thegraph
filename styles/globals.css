@@ -23,8 +23,6 @@ body {
 
 #container {
   background-color: #2d2b55;
-  height: 100%;
-  min-height: 100vh;
 }
 
 nav {
@@ -45,10 +43,17 @@ nav {
   color: #4d21fc;
 }
 
+.contentWrapper {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
 .footer {
   color: #4D21FC;
   text-align: center;
-  padding: 30px 20px 20px;
+  padding: 1.5rem;
+  margin-top: 3rem;
 }
 
 .footerLink {

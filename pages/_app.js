@@ -45,9 +45,11 @@ function MyApp({ Component, pageProps }) {
       <WagmiConfig client={wagmiClient}>
         <RainbowKitProvider chains={chains}>
           <ApolloProvider client={apolloClient}>
-            <Header />
-            <Component {...pageProps} />
-            <Footer />
+            <div className="contentWrapper">
+              <Header />
+              <Component {...pageProps} />
+              <Footer />
+            </div>
           </ApolloProvider>
         </RainbowKitProvider>
       </WagmiConfig>
