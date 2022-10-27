@@ -25,7 +25,7 @@ body {
   background-color: #2d2b55;
 }
 
-/* Navbar styles */
+/* Navbar Styles */
 nav {
   background: #fad000;
 }
@@ -37,6 +37,7 @@ nav {
 .navLink {
   color: #a599e9;
   font-weight: bold;
+  transition: all 0.2s linear;
 }
 
 .navLink:hover {
@@ -44,14 +45,14 @@ nav {
   color: #4d21fc;
 }
 
-/* Content wrapper styles */
+/* Content Wrapper Styles */
 .contentWrapper {
   min-height: 100vh;
   display: grid;
   grid-template-rows: auto 1fr auto;
 }
 
-/* Footer styles */
+/* Footer Styles */
 .footer {
   color: #4d21fc;
   text-align: center;
@@ -59,16 +60,7 @@ nav {
   margin-top: 1.5rem;
 }
 
-.footerLink {
-  display: block;
-  transition: all 0.2s linear;
-}
-
-.footerLink:hover {
-  text-decoration: underline;
-  transform: scale(1.03);
-}
-
+/* Page Content Styles */
 .pageTitle {
   color: #fad000;
 }
@@ -94,6 +86,18 @@ nav {
   color: #A5FF90;
   opacity: 0.9;
 }
+
+.link {
+  display: block;
+  transition: all 0.2s linear;
+}
+
+.link:hover {
+  font-weight: bold;
+  text-decoration: underline;
+  transform: scale(1.03);
+}
+
 /* NFT Card Styles */
 .nftCard {
   width: 235px;
@@ -157,7 +161,7 @@ nav {
   border-bottom-right-radius: 8px;
 }
 
-/* Modal styles overwrite */
+/* Modal Styles Overwrite */
 .ant-modal-content,
 .ant-modal-header {
   background: #1e1e3f !important;
