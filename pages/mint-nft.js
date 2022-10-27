@@ -33,8 +33,6 @@ const MintNFT = () => {
     try {
       const { transactionHash } = await tx.wait(1);
 
-      console.log('Tx Hash', transactionHash);
-
       setTxHash(transactionHash);
       setTargetNum(null);
 
@@ -92,7 +90,7 @@ const MintNFT = () => {
     <div className="flex flex-row items-center">
       <ExclamationCircleTwoTone
         className="mr-2"
-        style={{ fontSize: '20px' }}
+        style={{ fontSize: '18px' }}
         twoToneColor="#f5222d"
       />
       Error Minting NFT
@@ -100,7 +98,7 @@ const MintNFT = () => {
   );
 
   return (
-    <div className="container mx-auto text-slate-800">
+    <div className="container mx-auto">
       {!isDisconnected ? (
         mintError ? (
           <Modal
@@ -122,11 +120,15 @@ const MintNFT = () => {
           </Modal>
         ) : (
           <>
-            <h1 className="my-10 font-bold text-2xl">Mint your NFT</h1>
+            <h1 className="pageTitle mt-10 mb-16 font-bold text-2xl">
+              Mint your NFT
+            </h1>
             <div className="">
               {/* Pick target NFT number */}
-              <div className="font-bold text-xl mb-2">Pick a number</div>
-              <div className="italic mb-5">
+              <div className="instructionTitle font-bold text-xl mb-2">
+                Pick a number
+              </div>
+              <div className="instructionDesc italic mb-5">
                 Your NFT will be different based on the number you choose
               </div>
               <div className="mb-3">{numberButtons}</div>

@@ -86,6 +86,14 @@ nav {
   border-radius: 10px;
 }
 
+.instructionTitle{
+  color: #9EFFFF;
+}
+
+.instructionDesc {
+  color: #A5FF90;
+  opacity: 0.9;
+}
 /* NFT Card Styles */
 .nftCard {
   width: 235px;

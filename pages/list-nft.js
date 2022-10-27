@@ -182,7 +182,7 @@ const ListNFT = () => {
       <div className="flex flex-row items-center">
         <ExclamationCircleTwoTone
           className="mr-2"
-          style={{ fontSize: '20px' }}
+          style={{ fontSize: '18px' }}
           twoToneColor="#f5222d"
         />
         Error Approving or Listing NFT
@@ -206,35 +206,40 @@ const ListNFT = () => {
         ]}
       >
         {errorModalMsg.map((msgItem, index) => {
-          return <p key={index}>{msgItem}</p>;
+          return (
+            <p className="text-[#A599E9]" key={index}>
+              {msgItem}
+            </p>
+          );
         })}
       </Modal>
     );
   };
 
   return (
-    <div className="container mx-auto text-slate-800">
+    <div className="container mx-auto">
       {!isDisconnected ? (
         <>
-          {errorModalMsg && <ErrorModal />}
+          {!!errorModalMsg.length && <ErrorModal />}
 
-          <h1 className="mt-10 mb-3 font-bold text-2xl">
+          <h1 className="pageTitle mt-10 mb-2 font-bold text-2xl">
             List your NFT to Marketplace
           </h1>
 
-          <div className="italic text-base mb-10">
-            {' '}
-            Not owning any NFT yet?{' '}
+          <div className="instructionDesc italic text-base mb-20 flex flex-row">
+            <div className="mr-2">Not owning any NFT yet?</div>
             <Link href="/mint-nft">
-              <a>Mint One NOW!</a>
-            </Link>{' '}
+              <a className="link">Mint One NOW!</a>
+            </Link>
           </div>
 
           {/* Approve for Marketplace to sell the NFT */}
-          <div className="font-bold text-xl mb-2">
+          <div className="instructionTitle font-bold text-xl mb-2">
             1. Approve to List your NFT
           </div>
-          <div className="italic mb-4">Set the token ID of your NFT</div>
+          <div className="instructionDesc italic mb-4">
+            Set the token ID of your NFT
+          </div>
           <div>
             <InputNumber
               className="py-2 mb-3 text-base"
@@ -252,10 +257,12 @@ const ListNFT = () => {
               }
               onChange={handleTokenIdChange}
             />
-            {tokenIdError && <div className="text-red-700">{tokenIdError}</div>}
+            {tokenIdError && (
+              <div className="text-[#EC3A37F5]">{tokenIdError}</div>
+            )}
           </div>
           <Button
-            className="mt-3 mb-10"
+            className="mt-3 mb-16"
             type="primary"
             disabled={!tokenId || !enableApproveBtn || approveNFTLoading}
             loading={approveNFTLoading}
@@ -263,11 +270,13 @@ const ListNFT = () => {
           >
             Approve to List
           </Button>
-          {/* Price input */}
-          <div className="font-bold text-xl mb-2">
+          {/* Set price & List NFT */}
+          <div className="instructionTitle font-bold text-xl mb-2">
             2. Set a Price & List Item
           </div>
-          <div className="italic mb-4">Set the selling price of your NFT</div>
+          <div className="instructionDesc italic mb-4">
+            Set the selling price of your NFT
+          </div>
           <div>
             <InputNumber
               className="py-2 mb-3 text-base"
@@ -288,7 +297,7 @@ const ListNFT = () => {
               onChange={handlePriceChange}
             />
             {nftApproved && priceError && (
-              <div className="text-red-700">{priceError}</div>
+              <div className="text-[#EC3A37F5]">{priceError}</div>
             )}
           </div>
           <Button
@@ -296,7 +305,7 @@ const ListNFT = () => {
             type="primary"
             disabled={
               !listingPrice ||
-              // !nftApproved ||
+              !nftApproved ||
               listItemLoading ||
               !enableListingBtn
             }
