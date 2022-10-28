@@ -40,7 +40,7 @@ export default function Home() {
             <Skeleton className="my-20" active={true} />
           </>
         ) : fetchActiveItemError ? (
-          <div className="tipsBox">
+          <div className="tipsBox w-4/5">
             <ExclamationCircleTwoTone style={{ fontSize: '50px' }} />
             <div className="mt-5 text-xl">Network Error, please retry.</div>
           </div>
@@ -70,7 +70,7 @@ export default function Home() {
           </>
         )
       ) : (
-        <div className="tipsBox">
+        <div className="tipsBox w-4/5">
           <p className="text-xl mb-8">
             Connect a wallet to use NFT Marketplace
           </p>

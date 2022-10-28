@@ -151,7 +151,7 @@ const NFTBox = ({
   }, [isDisconnected, userAccount]);
 
   return (
-    <div className="nftCard mr-5 mb-5 rounded-lg">
+    <div className="nftCard">
       {!imageURI ? (
         <div className="m-5 flex flex-col items-center">
           <Skeleton.Image active={true} style={{ width: 150, height: 150 }} />

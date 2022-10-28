@@ -131,11 +131,11 @@ const MintNFT = () => {
               <div className="instructionDesc italic mb-5">
                 Your NFT will be different based on the number you choose
               </div>
-              <div className="mb-3">{numberButtons}</div>
+              <div className="mintNumberBtns">{numberButtons}</div>
               {/* Mint NFT Button */}
               <Button
                 type="primary"
-                className="font-bold text-xl mt-5 mb-10"
+                className="mintBtn font-bold text-xl mt-5 mb-10"
                 disabled={!enableMintBtn || !targetNum || mintNFTLoading}
                 loading={mintNFTLoading}
                 onClick={mintNFT}

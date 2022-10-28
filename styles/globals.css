@@ -17,8 +17,12 @@
   );
 }
 
+html,
 body {
+  margin: 0 !important;
+  padding: 0 !important;
   background-color: #2d2b55;
+  scroll-behavior: smooth;
 }
 
 #container {
@@ -70,20 +74,20 @@ nav {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 80px;
-  padding: 40px;
+  margin: 6rem auto;
+  padding: 3rem;
   text-align: center;
   color: #fad000;
   font-weight: bold;
-  border-radius: 10px;
+  border-radius: 0.8rem;
 }
 
-.instructionTitle{
-  color: #9EFFFF;
+.instructionTitle {
+  color: #9effff;
 }
 
 .instructionDesc {
-  color: #A5FF90;
+  color: #a5ff90;
   opacity: 0.9;
 }
 
@@ -100,8 +104,11 @@ nav {
 
 /* NFT Card Styles */
 .nftCard {
-  width: 235px;
+  width: 15rem;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
   background: var(--linear-gradient-high-transparency);
+  border-radius: 0.5rem;
   box-sizing: border-box;
   transition: all 0.2s linear;
 }
@@ -112,8 +119,8 @@ nav {
 }
 
 .nftImage {
-  width: 150px;
-  margin: 20px auto;
+  width: 10rem;
+  margin: 1.5rem auto;
 }
 
 .nftDesc {
@@ -128,7 +135,7 @@ nav {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  margin-top: 10px;
+  margin-top: 0.8rem;
 }
 
 .nftCardAction {
@@ -136,7 +143,7 @@ nav {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  padding: 10px;
+  padding: 0.8rem;
   color: #a599e9;
   text-align: center;
 }
@@ -149,16 +156,81 @@ nav {
 }
 
 .sellerAction:first-child {
-  border-bottom-left-radius: 8px;
+  border-bottom-left-radius: 0.6rem;
 }
 
 .sellerAction:last-child {
-  border-bottom-right-radius: 8px;
+  border-bottom-right-radius: 0.6rem;
 }
 
 .buyerAction {
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 0.6rem;
+  border-bottom-right-radius: 0.6rem;
+}
+
+.mintNumberBtns {
+  margin-bottom: 0.75rem;
+}
+
+.approveBtn,
+.listBtn {
+  margin-top: 0.75rem;
+  margin-bottom: 4rem;
+}
+
+/* Mobile Screens */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1.25rem;
+  }
+
+  .nftCard:nth-child(odd) {
+    margin-right: 1.25rem;
+  }
+
+  .nftCard:nth-child(even) {
+    margin-right: 0;
+  }
+
+  .pageTitle {
+    font-size: 2rem;
+  }
+
+  .instructionTitle {
+    font-size: 1.8rem;
+  }
+
+  .instructionDesc {
+    font-size: 1.2rem;
+  }
+
+  .mintBtn,
+  .approveBtn,
+  .listBtn {
+    width: 12rem;
+    height: 3rem !important;
+    font-size: 1.1rem !important;
+  }
+
+  .mintNumberBtns button {
+    width: 4rem;
+    height: 3rem;
+    font-size: 1.2rem;
+  }
+  .tokenIdInput .ant-input-number-affix-wrapper,
+  .priceInput .ant-input-number-affix-wrapper {
+    width: 10rem !important;
+    padding: 0.5rem 1rem !important;
+  }
+
+  .tokenIdInput input,
+  .priceInput input {
+    font-size: 1rem;
+  }
+
+  .priceInput .ant-input-number-group-addon {
+    font-size: 1rem;
+  }
 }
 
 /* Modal Styles Overwrite */

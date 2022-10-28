@@ -240,7 +240,7 @@ const ListNFT = () => {
           <div className="instructionDesc italic mb-4">
             Set the token ID of your NFT
           </div>
-          <div>
+          <div className="tokenIdInput">
             <InputNumber
               className="py-2 mb-3 text-base"
               disabled={approveNFTLoading}
@@ -262,7 +262,7 @@ const ListNFT = () => {
             )}
           </div>
           <Button
-            className="mt-3 mb-16"
+            className="approveBtn"
             type="primary"
             disabled={!tokenId || !enableApproveBtn || approveNFTLoading}
             loading={approveNFTLoading}
@@ -277,7 +277,7 @@ const ListNFT = () => {
           <div className="instructionDesc italic mb-4">
             Set the selling price of your NFT
           </div>
-          <div>
+          <div className="priceInput">
             <InputNumber
               className="py-2 mb-3 text-base"
               addonAfter="ETH"
@@ -301,7 +301,7 @@ const ListNFT = () => {
             )}
           </div>
           <Button
-            className="mt-3"
+            className="listBtn"
             type="primary"
             disabled={
               !listingPrice ||
