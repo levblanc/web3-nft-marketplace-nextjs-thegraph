@@ -1,6 +1,5 @@
 import { Modal, InputNumber, Button, notification, Spin } from 'antd';
 import { ExclamationCircleTwoTone, setTwoToneColor } from '@ant-design/icons';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useAccount, useProvider } from 'wagmi';
 import { useState } from 'react';
 import { ethers } from 'ethers';
@@ -11,6 +10,7 @@ import contractUtils from '../utils/contract';
 import { markAssetError } from 'next/dist/client/route-loader';
 import { list } from 'postcss';
 import Link from 'next/link';
+import ConnectTips from '../components/ConnectTips';
 
 const ListNFT = () => {
   const {
@@ -316,12 +316,7 @@ const ListNFT = () => {
           </Button>
         </>
       ) : (
-        <div className="flex flex-col items-center">
-          <p className="font-bold text-xl text-center pt-20 pb-10">
-            Connect a wallet to list your NFT
-          </p>
-          <ConnectButton />
-        </div>
+        <ConnectTips tips={'Connect a wallet to list your NFT'} />
       )}
     </div>
   );

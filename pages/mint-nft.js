@@ -1,6 +1,5 @@
 import { Modal, Button, notification } from 'antd';
 import { ExclamationCircleTwoTone, setTwoToneColor } from '@ant-design/icons';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useAccount, useProvider } from 'wagmi';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -9,6 +8,7 @@ import contractAddresses from '../constants/contractAddresses.json';
 import dynamicNFTAbi from '../constants/dynamicNFTAbi.json';
 import marketplaceAbi from '../constants/marketplaceAbi.json';
 import contractUtils from '../utils/contract';
+import ConnectTips from '../components/ConnectTips';
 
 const MintNFT = () => {
   const {
@@ -173,12 +173,7 @@ const MintNFT = () => {
           </>
         )
       ) : (
-        <div className="flex flex-col items-center">
-          <p className="font-bold text-xl text-center pt-20 pb-10">
-            Connect a wallet to mint your NFT
-          </p>
-          <ConnectButton />
-        </div>
+        <ConnectTips tips={'Connect a wallet to mint your NFT'} />
       )}
     </div>
   );

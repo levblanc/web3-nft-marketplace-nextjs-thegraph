@@ -2,11 +2,11 @@ import { useEffect } from 'react';
 import { useLazyQuery } from '@apollo/client';
 import { useAccount, useProvider } from 'wagmi';
 import { Skeleton } from 'antd';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { ExclamationCircleTwoTone, setTwoToneColor } from '@ant-design/icons';
 import { GET_ACTIVE_ITEMS } from '../constants/subgraphQueries';
 import contractAddresses from '../constants/contractAddresses.json';
 import NFTCard from '../components/NFTCard';
+import ConnectTips from '../components/ConnectTips';
 
 export default function Home() {
   setTwoToneColor('#f5222d');
@@ -70,12 +70,7 @@ export default function Home() {
           </>
         )
       ) : (
-        <div className="tipsBox w-4/5">
-          <p className="text-xl mb-8">
-            Connect a wallet to use NFT Marketplace
-          </p>
-          <ConnectButton />
-        </div>
+        <ConnectTips tips={'Connect a wallet to use NFT Marketplace'} />
       )}
     </div>
   );
