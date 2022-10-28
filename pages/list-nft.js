@@ -1,7 +1,7 @@
 import { Modal, InputNumber, Button, notification, Spin } from 'antd';
 import { ExclamationCircleTwoTone, setTwoToneColor } from '@ant-design/icons';
 import { useAccount, useProvider } from 'wagmi';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 import contractAddresses from '../constants/contractAddresses.json';
 import dynamicNFTAbi from '../constants/dynamicNFTAbi.json';
@@ -215,6 +215,11 @@ const ListNFT = () => {
       </Modal>
     );
   };
+
+  useEffect(() => {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  });
 
   return (
     <div className="container mx-auto">

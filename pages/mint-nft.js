@@ -2,7 +2,7 @@ import { Modal, Button, notification } from 'antd';
 import { ExclamationCircleTwoTone, setTwoToneColor } from '@ant-design/icons';
 import { useAccount, useProvider } from 'wagmi';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 import contractAddresses from '../constants/contractAddresses.json';
 import dynamicNFTAbi from '../constants/dynamicNFTAbi.json';
@@ -97,6 +97,11 @@ const MintNFT = () => {
     </div>
   );
 
+  useEffect(() => {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  });
+
   return (
     <div className="container mx-auto">
       {!isDisconnected ? (
@@ -123,7 +128,7 @@ const MintNFT = () => {
             <h1 className="pageTitle mt-10 mb-16 font-bold text-2xl">
               Mint your NFT
             </h1>
-            <div className="">
+            <div>
               {/* Pick target NFT number */}
               <div className="instructionTitle font-bold text-xl mb-2">
                 Pick a number

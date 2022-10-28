@@ -22,6 +22,9 @@ export default function Home() {
     useLazyQuery(GET_ACTIVE_ITEMS);
 
   useEffect(() => {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+
     if (!isDisconnected) {
       try {
         fetchActiveItems();
