@@ -219,7 +219,7 @@ const ListNFT = () => {
   return (
     <div className="container mx-auto">
       {!isDisconnected ? (
-        <>
+        <div className="listNftContent">
           {!!errorModalMsg.length && <ErrorModal />}
 
           <h1 className="pageTitle mt-10 mb-2 font-bold text-2xl">
@@ -314,7 +314,7 @@ const ListNFT = () => {
           >
             List Item
           </Button>
-        </>
+        </div>
       ) : (
         <ConnectTips tips={'Connect a wallet to list your NFT'} />
       )}

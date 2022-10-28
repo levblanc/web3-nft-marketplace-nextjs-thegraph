@@ -119,7 +119,7 @@ const MintNFT = () => {
             {mintError}
           </Modal>
         ) : (
-          <>
+          <div className="mintNftContent">
             <h1 className="pageTitle mt-10 mb-16 font-bold text-2xl">
               Mint your NFT
             </h1>
@@ -170,7 +170,7 @@ const MintNFT = () => {
                 </p>
               </>
             )}
-          </>
+          </div>
         )
       ) : (
         <ConnectTips tips={'Connect a wallet to mint your NFT'} />
