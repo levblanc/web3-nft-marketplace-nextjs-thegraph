@@ -121,7 +121,7 @@ const MintNFT = () => {
               </Button>,
             ]}
           >
-            {mintError}
+            <p className="text-[#A599E9]">{mintError}</p>
           </Modal>
         ) : (
           <div className="mintNftContent">
