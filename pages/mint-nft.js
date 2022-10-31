@@ -151,28 +151,25 @@ const MintNFT = () => {
             {/* Instructions to get token ID & list NFT */}
             {txHash && (
               <>
-                <p className="text-lg mb-3">
-                  NFT minted! Transaction hash is {txHash}
+                <p className="text-lg mb-3 text-[#FFEE80]">
+                  NFT minted! Transaction hash is:
+                  <p>{txHash}</p>
                 </p>
-                <p>
-                  1.{' '}
-                  <Link
-                    href={`https://goerli.etherscan.io/tx/${txHash}`}
-                    target="_blank"
-                  >
-                    <a className="text-base italic my-5">
-                      Check your token ID on goerli.etherscan.io
-                    </a>
-                  </Link>
-                </p>
-                <p>
-                  2.{' '}
-                  <Link href="/list-nft">
-                    <a className="text-base italic my-5">
-                      List & Sell your NFT now!
-                    </a>
-                  </Link>
-                </p>
+                <Link
+                  href={`https://goerli.etherscan.io/tx/${txHash}`}
+                  target="_blank"
+                >
+                  <a className="link text-base italic my-5">
+                    <span className="text-[#1890ff]">1. </span>
+                    Check your token ID on goerli.etherscan.io
+                  </a>
+                </Link>
+                <Link href="/list-nft">
+                  <a className="link text-base italic my-5">
+                    <span className="text-[#1890ff]">2. </span>
+                    List & Sell your NFT now!
+                  </a>
+                </Link>
               </>
             )}
           </div>
